@@ -1,3 +1,10 @@
+<style>
+.container {
+  max-width: 100vw;
+  padding: 0px;
+}
+</style>
+
 <template>
   <v-app dark>
     <v-navigation-drawer v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed app>
@@ -50,8 +57,7 @@
   </v-app>
 </template>
 
-<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
 <script>
 export default {
   data() {
@@ -70,13 +76,13 @@ export default {
           title: "Inspire",
           to: "/inspire"
         },
-        { icon: "mdi-chart-bubble", title: "게시판", to: "/articles/" }
+        { icon: "mdi-chart-bubble", title: "board", to: "/articles/" }
       ],
 
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: "Vuetify.js"
+      title: "test"
     };
   }
   //if()

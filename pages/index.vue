@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app>
     <!--<v-app-bar app color="white" height="50">
       <v-avatar class="mr-3" color="grey lighten-5" size="70">
         <v-img
@@ -146,7 +146,7 @@
             <v-divider></v-divider>
           </v-responsive>
 
-          <v-btn @click="testFunc1">버튼 테스트</v-btn>
+          <!-- <v-btn @click="testFunc1">버튼 테스트</v-btn> -->
 
           <v-row>
             <v-col v-for="({ src, text, title }, i) in articles" :key="i" cols="12" md="4">
@@ -210,10 +210,8 @@
         class="title font-weight-light grey--text text--lighten-1 text-center"
       >&copy; {{ (new Date()).getFullYear() }} — Vuetify, LLC — Made with 💜 by John Leider</div>s
     </v-footer>
-  </div>
+  </v-app>
 </template>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 
 <script>
 import Logo from "~/components/Logo.vue";

@@ -47,7 +47,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [{ src: "~/plugins/fullpage.js" }],
   /*
    ** Nuxt.js dev-modules
    */
@@ -61,6 +61,7 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     "@nuxtjs/auth",
+    // "nuxt-fullpage.js",
     //"@nuxtjs/vuetify",
   ],
 

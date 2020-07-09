@@ -1,80 +1,41 @@
 <template>
-  <!-- <v-layout column justify-center align-center>
-    <v-flex class="text-center" xs12 sm8 md6>&#8220;게시판.&#8221;</v-flex>
-  </v-layout>
--->
-  <v-app>
-    <v-content :style="mainStyle">
-      <section id="about-me">
-        <div class="py-12"></div>
+  <div>
+    
+    <v-content :style="boardStyle">
+      <div class="section fp-table active">
+        <div class="section"></div>
+      </div>
 
-        <v-container class="text-center">
-          <h2 class="display-2 font-weight-bold mb-3">ABOUT ME</h2>
+      <div class="alert alert-success" v-if="$route.params.created=='yes'">게시글이 등록되었습니다!</div>
+      <div class="alert alert-success" v-if="$route.params.deleted=='yes'">게시글이 삭제되었습니다!</div>
 
-          <v-responsive class="mx-auto mb-8" width="56">
-            <v-divider class="mb-1"></v-divider>
-
-            <v-divider></v-divider>
-          </v-responsive>
-
-          <v-responsive
-            class="mx-auto title font-weight-light mb-8"
-            max-width="720"
-            >Vuetify is the #1 component library for Vue.js and has been in
-            active development since 2016. The goal of the project is to provide
-            users with everything that is needed to build rich and engaging web
-            applications using the Material Design specification. It
-            accomplishes that with a consistent update cycle, Long-term Support
-            (LTS) for previous versions, responsive community engagement, a vast
-            ecosystem of resources and a dedication to quality
-            components.</v-responsive
-          >
-
-          <v-avatar class="elevation-12 mb-12" size="128">
-            <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
-          </v-avatar>
-
-          <div></div>
-
-          <v-btn color="grey" href="https://vuetifyjs.com" outlined large>
-            <span class="grey--text text--darken-1 font-weight-bold"
-              >Vuetify Documentation</span
-            >
+      <div id="add_contents" class="add_contents">
+        <nuxt-link to="/articles/add">
+          <v-btn depressed style="width:80px;">
+            <i class="mdi mdi-emoticon-outline" style="font-size:30px"></i>
+            <i class="mdi mdi-grease-pencil" style="font-size:30px"></i>
           </v-btn>
-        </v-container>
+        </nuxt-link>
+      </div>
 
-        <div class="py-12"></div>
-      </section>
+      <div id="sub_contents" class="sub_contents">
+        <div class="board_list"></div>
+
+        <section id="list" v-if="articles.length">
+          <nuxt-link
+            class="list-group-item list-group-item-action"
+            :to="'/articles/' + article._id"
+            v-for="article in articles"
+            :key="article._id"
+          >{{ article.title }}</nuxt-link>
+        </section>
+        <div class="alert alert-info" v-else>게시글이 없습니다.</div>
+      </div>
     </v-content>
-  </v-app>
-  <!-- <div>
-    <div class="d-flex justify-content-between align-items-center">
-      <h1>Articles</h1>
-      <nuxt-link to="/articles/add" class="btn btn-success">Add New</nuxt-link>
-    </div>
-    <hr>
-
-    <div class="alert alert-success"
-      v-if="$route.params.created=='yes'">Record added successfully</div>
-    <div class="alert alert-success"
-      v-if="$route.params.deleted=='yes'">Record deleted successfully</div>
-
-    <div class="list-group"
-      v-if="articles.length">
-      <nuxt-link
-        class="list-group-item list-group-item-action"
-        :to="'/articles/' + article._id"
-        v-for="article in articles"
-        :key="article._id">
-        {{ article.title }}
-      </nuxt-link>
-    </div>
-
-    <div class="alert alert-info"
-      v-else>
-      No records found.
-    </div>
-  </div>-->
+    <v-btn icon @click.stop="fixed = !fixed" class="top_btn" aria-label="Scroll on top">
+      <v-icon>mdi-publish</v-icon>
+    </v-btn>
+  </div>
 </template>
 
 <script>
@@ -85,6 +46,11 @@ export default {
       articles: data
     };
   },
-  layout: "vuetify"
+  layout: "vuetify",
+  data: () => ({
+    boardStyle: "padding:0px"
+  }),
+  destroyed() {},
+  created() {}
 };
 </script>

@@ -34,6 +34,17 @@ module.exports = {
         rel: "shortcut icon",
         href: "https://cdn.vuetifyjs.com/images/logos/favicon.ico",
       },
+      {
+        rel: "stylesheet",
+        href:
+          "https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons",
+      },
+
+      {
+        rel: "stylesheet",
+        href:
+          "https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css",
+      },
     ],
   },
   /*
@@ -47,7 +58,8 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: "~/plugins/fullpage.js" }],
+  plugins: [{ src: "~/plugins/fullpage", mode: "client" }],
+  //plugins: [],
   /*
    ** Nuxt.js dev-modules
    */
@@ -56,12 +68,13 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
+    // "fullpage-vue",
     // Doc: https://bootstrap-vue.js.org
     "bootstrap-vue/nuxt",
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     "@nuxtjs/auth",
-    // "nuxt-fullpage.js",
+
     //"@nuxtjs/vuetify",
   ],
 
@@ -69,6 +82,7 @@ module.exports = {
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
    */
+
   components: true,
 
   auth: {
@@ -110,6 +124,8 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
+
+    //vendor: ["external_library"],
     extend(config, ctx) {},
   },
 

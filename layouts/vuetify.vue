@@ -3,25 +3,41 @@
   max-width: 100vw;
   padding: 0px;
 }
+
+.add_contents {
+  position: relative;
+  max-width: 100vw;
+  padding: 20px 0 10px;
+  margin: 0 auto;
+  left: 10px;
+  margin-bottom: 10px !important;
+}
+
+.sub_contents {
+  position: relative;
+  max-width: 100vw;
+  padding: 0 0 10px;
+  margin: 0 auto;
+  margin-bottom: 10px !important;
+}
+
+.top_btn {
+  transform-origin: center center;
+  height: 64px;
+  width: 64px;
+  right: 16px;
+  position: fixed;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+}
+
 </style>
 
 <template>
   <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
+    <v-navigation-drawer v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed app>
       <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
+        <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>

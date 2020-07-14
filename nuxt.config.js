@@ -4,48 +4,48 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: "dalin 114",
+    title: "114도와주세요!!",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       {
         hid: "description",
         name: "description",
-        content: process.env.npm_package_description || "",
-      },
+        content: process.env.npm_package_description || ""
+      }
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       {
         rel: "stylesheet",
         href:
-          "https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900",
+          "https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
       },
       {
         rel: "stylesheet",
         href:
-          "https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css",
+          "https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css"
       },
       {
         rel: "stylesheet",
-        href: "https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css",
+        href: "https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
       },
       {
         rel: "shortcut icon",
-        href: "https://cdn.vuetifyjs.com/images/logos/favicon.ico",
+        href: "https://cdn.vuetifyjs.com/images/logos/favicon.ico"
       },
       {
         rel: "stylesheet",
         href:
-          "https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons",
+          "https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
       },
 
       {
         rel: "stylesheet",
         href:
-          "https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css",
-      },
-    ],
+          "https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css"
+      }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -73,7 +73,7 @@ module.exports = {
     "bootstrap-vue/nuxt",
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
-    "@nuxtjs/auth",
+    "@nuxtjs/auth"
 
     //"@nuxtjs/vuetify",
   ],
@@ -92,25 +92,25 @@ module.exports = {
           login: {
             url: "/api/users/login",
             method: "post",
-            propertyName: "token",
+            propertyName: "token"
           },
           logout: true,
           user: {
             url: "/api/users/user",
             method: "get",
-            propertyName: "user",
-          },
+            propertyName: "user"
+          }
         },
         tokenRequired: true,
-        tokenType: "Bearer",
-      },
+        tokenType: "Bearer"
+      }
     },
     redirect: {
       login: "/user/login", // User will be redirected to this path if login is required
       logout: "/", // User will be redirected to this path if after logout, current route is protected
-      home: "/", // User will be redirect to this path after login if accessed login page directly
+      home: "/" // User will be redirect to this path after login if accessed login page directly
     },
-    rewriteRedirects: true,
+    rewriteRedirects: true
   },
   /*
    ** Axios module configuration
@@ -126,8 +126,8 @@ module.exports = {
      */
 
     //vendor: ["external_library"],
-    extend(config, ctx) {},
+    extend(config, ctx) {}
   },
 
-  serverMiddleware: ["~/api/index.js"],
+  serverMiddleware: ["~/api/index.js"]
 };

@@ -2,11 +2,20 @@
   <div class="fullpage-container">
     <div class="fullpage-wp" v-fullpage="fullpageOptions" ref="example">
       <!-- <div class="page-1 page">-->
-      <div id="section1" class="section">
+
+      <div id="section1" class="page">
         <!-- <p class="part-1" v-animate="{value: 'bounceInLeft'}">111111</p> -->
         <!-- <img src="~assets/1.jpg"/>  -->
+        <div class="banner">
+          <v-banner v-model="v0" single-line transition="slide-y-transition">
+            홈페이지 OPEN EVENT
+            <template v-slot:actions="{ dismiss }">
+              <v-btn text color="gray" @click="dismiss">안보이기</v-btn>
+            </template>
+          </v-banner>
+        </div>
       </div>
-      <div id="section2" class="section">
+      <div id="section2" class="page">
         <v-carousel
           cycle
           height="100%"
@@ -18,60 +27,135 @@
               <div v-if="i == 0" class="slide slide1"></div>
               <div v-if="i == 1" class="slide slide2"></div>
               <div v-if="i == 2" class="slide slide3"></div>
-              <!-- <v-row class="fill-height" align="center" justify="center">
-                <div class="display-3">{{ slide }} Slide</div>
-              </v-row> -->
             </v-sheet>
           </v-carousel-item>
         </v-carousel>
-
-        <!--
-        <div v-if="section2PageNum == 0" class="slide slide1"></div>
-        <div v-if="section2PageNum == 1" class="slide slide2"></div>
-        <div v-if="section2PageNum == 2" class="slide slide3"></div>
-        <button class="my-arrow left" @click="movePrev()">
-          <svg
-            width="60px"
-            height="80px"
-            viewBox="0 0 50 80"
-            xml:space="preserve"
-          >
-            <polyline
-              fill="none"
-              stroke="#FFFFFF"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              points="
-                    45.63,75.8 0.375,38.087 45.63,0.375 "
-            ></polyline>
-          </svg>
-        </button>
-        <button class="my-arrow right" @click="moveNext()">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            width="60px"
-            height="80px"
-            viewBox="0 0 50 80"
-            xml:space="preserve"
-          >
-            <polyline
-              fill="none"
-              stroke="#FFFFFF"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              points="
-                    0.375,0.375 45.63,38.087 0.375,75.8 "
-            ></polyline>
-          </svg>
-        </button>
-        -->
       </div>
-      <div id="section3" class="section"></div>
+
+      <div id="section3" class="page">
+        
+        <v-layout aling-center wrap>
+            <v-flex>
+            
+            <v-layout column >
+                <v-card v-for="card in cards"
+                :key="card.title"
+                :cols="card.flex"
+                v-if="card.code <= 2"
+                >
+                 <v-img
+                    class="white--text align-end"
+                    gradient=" rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                    :id="card.title"
+                    @click="detailShow(card.code)"
+                  >
+                    <v-card-title v-text="card.title"></v-card-title>
+                  </v-img>
+                </v-card>
+                </v-layout>
+
+
+              </v-flex>
+        
+          <v-flex>
+            <v-layout column>
+                <v-card v-for="card in cards"
+                :key="card.title"
+                :cols="card.flex"
+                v-if="card.code > 2"
+                >
+                 <v-img
+                    class="white--text align-end"
+                    gradient=" rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                    :id="card.title"
+                    @click="detailShow(card.code)"
+                  >
+                    <v-card-title v-text="card.title"></v-card-title>
+                  </v-img>
+                </v-card>
+                </v-layout>
+
+                
+              </v-flex>
+            
+            <v-flex fill-height fill-width>
+              <v-card cols="6">
+                 <v-carousel
+                    cycle
+                    hide-delimiter-background
+                    show-arrows-on-hover
+                  >
+                    <v-carousel-item
+                      v-for="(item, i) in cardDetails"
+                      :key="i"
+                      v-if="item.code == codeNum"
+                      :class="item.title"
+                    ></v-carousel-item>
+                  </v-carousel>
+                  </v-card>
+            </v-flex>
+            
+          </v-layout>
+
+        <!-- <div class="cards">
+          <v-card max-width="100%" outlined>
+            <v-row dense no-gutters>
+              <v-col
+                v-for="card in cards"
+                :key="card.title"
+                :cols="card.flex"
+                v-if="card.code <= 2"
+              >
+                <v-card>
+                  <v-img
+                    class="white--text align-end"
+                    gradient=" rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                    :id="card.title"
+                    @click="detailShow(card.code)"
+                  >
+                    <v-card-title v-text="card.title"></v-card-title>
+                  </v-img>
+                </v-card>
+              </v-col>
+                <v-col cols="6">
+                  <v-carousel
+                    cycle
+                    hide-delimiter-background
+                    show-arrows-on-hover
+                  >
+                    <v-carousel-item
+                      v-for="(item, i) in cardDetails"
+                      :key="i"
+                      v-if="item.code == codeNum"
+                      :class="item.title"
+                    ></v-carousel-item>
+                  </v-carousel>
+                </v-col>
+              
+              <v-col
+                v-for="card in cards"
+                :key="card.title"
+                :cols="card.flex"
+                v-if="card.code > 2"
+              >
+                <v-card>
+                  <v-img
+                    class="white--text align-end"
+                    gradient=" rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                     :id="card.title"
+                    @click="detailShow(card.code)"
+                  >
+                    <v-card-title v-text="card.title"></v-card-title>
+                  </v-img>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-card> -->
+        </div>
+      </div>
     </div>
   </div>
+  <!-- :src="card.src" -->
 </template>
 
 <script>
@@ -82,22 +166,17 @@ export default {
     Logo
   },
   layout: "vuetify",
+  scrollTop: true,
   data: () => ({
-    colors: [
-      "indigo",
-      "warning",
-      "pink darken-2",
-      "red lighten-1",
-      "deep-purple accent-4"
-    ],
-    slides: ["First", "Second", "Third", "Fourth", "Fifth"],
-    section2PageNum: 0,
+    colors: ["white", "white", "white"],
+    slides: ["First", "Second", "Third"],
     mainStyle: "padding:0px",
     vueName: "index",
+    codeNum: 1,
     fullpageOptions: {
       start: 0,
       duration: 500,
-      crollingSpeed: 500,
+      crollingSpeed: 300,
       anchors: ["firstPage", "secondPage", "thirdPage"],
       navigation: true,
       navigationTooltips: ["first", "second", "thrid"],
@@ -106,14 +185,107 @@ export default {
       autoScrolling: true,
       fitToSection: true,
       scrollBar: false,
-      slideSelector: ".slide",
       loopBottom: true,
       beforeChange: function(currentSlideEl, currenIndex, nextIndex) {},
       afterChange: function(currentSlideEl, currenIndex) {}
-    }
+    },
+    v0: true,
+    cards: [
+      {
+        title: "homes",
+        flex: 3,
+        code: 1
+      },
+
+      {
+        title: "nature",
+        flex: 3,
+        code: 2
+      },
+      {
+        title: "tools",
+        flex: 3,
+        code: 3
+      },
+      {
+        title: "picnic",
+        flex: 3,
+        code: 4
+      }
+    ],
+    cardDetails: [
+      {
+        title: "homes-1",
+        code: 1
+      },
+      {
+        title: "homes-2",
+        code: 1
+      },
+      {
+        title: "homes-3",
+        code: 1
+      },
+      {
+        title: "homes-4",
+        code: 1
+      },
+      {
+        title: "nature-1",
+        code: 2
+      },
+      {
+        title: "nature-2",
+        code: 2
+      },
+      {
+        title: "nature-3",
+        code: 2
+      },
+      {
+        title: "nature-4",
+        code: 2
+      },
+      {
+        title: "tools-1",
+        code: 3
+      },
+      {
+        title: "tools-2",
+        code: 3
+      },
+      {
+        title: "tools-3",
+        code: 3
+      },
+      {
+        title: "tools-4",
+        code: 3
+      },
+      {
+        title: "picnic-1",
+        code: 4
+      },
+      {
+        title: "picnic-2",
+        code: 4
+      },
+      {
+        title: "picnic-3",
+        code: 4
+      },
+      {
+        title: "picnic-4",
+        code: 4
+      }
+    ]
   }),
   methods: {
-    moveNext() {
+    detailShow(param) {
+      this.codeNum = param;
+      console.log("codeNum: " + this.codeNum);
+    }
+    /*moveNext() {
       // this.$refs.example.$fullpage.moveNext(); //Move to the next page
       this.section2PageNum = this.section2PageNum + 1;
       if (this.section2PageNum > 2) {
@@ -126,7 +298,7 @@ export default {
       if (this.section2PageNum < 0) {
         this.section2PageNum = 2;
       }
-    }
+    } */
   },
   destroyed() {
     console.log("destroy = " + this.vueName);
@@ -158,7 +330,7 @@ export default {
   height: auto;
 }
 #section3 {
-  background: url("~assets/3.jpg") no-repeat center / cover;
+  /*background: url("~assets/3.jpg") no-repeat center / cover;*/
   max-width: 100%;
   height: auto;
 }
@@ -183,44 +355,14 @@ export default {
   max-width: 100%;
 }
 
-/* 스크롤 라인 애니메이션*/
-.company_box.active-page.type01 #section1_scroll {
-  opacity: 1;
-}
-#section1_scroll {
-  position: fixed;
-  bottom: 0px;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  z-index: 99;
-  opacity: 0;
-}
-#section1_scroll .line {
-  position: relative;
-  width: 2px;
-  height: 70px;
-  margin: 0 auto;
-  display: inline-block;
-  background-color: #8e8e8e;
-  overflow: hidden;
-}
-#section1_scroll .line:after {
-  content: "";
-  position: absolute;
-  top: -20px;
-  left: 0;
-  width: 2px;
-  height: 20px;
-  background-color: #ffffff;
-  animation: scroll-animate 2s infinite;
+.banner {
+  background-color: bisque;
 }
 
-/* .nav a:hover { background: rgba(255, 255, 255, 0.7);} */
-.nav a:hover {
-  background: rgba(255, 255, 255, 0.7);
+.row--dense > .col,
+.row--dense > [class*="col-"] {
+  background-color: transparent;
 }
-
 @keyframes scroll-animate {
   0% {
     top: -16px;
@@ -230,38 +372,75 @@ export default {
   }
 }
 
-/** section 구역  */
-.my-arrow {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  margin-top: -45px;
-  width: 70px;
-  height: 90px;
-  z-index: 99;
-  -webkit-appearance: none;
-  background: 0 0;
-  border: 0;
-  outline: 0;
+#homes {
+  background: url("~assets/main/homes/1.jpg") no-repeat center / cover;
 }
-.my-arrow.left {
-  left: 20px;
+.homes-1 {
+  background: url("~assets/main/homes/1-1.jpg") no-repeat center / cover;
 }
-.my-arrow.right {
-  right: 20px;
+.homes-2 {
+  background: url("~assets/main/homes/1-2.jpg") no-repeat center / cover;
 }
-.my-arrow svg {
-  padding: 5px;
+.homes-3 {
+  background: url("~assets/main/homes/1-3.jpg") no-repeat center / cover;
 }
-button {
-  text-rendering: auto;
-  color: -internal-light-dark-color(buttontext, rgb(170, 170, 170));
-  letter-spacing: normal;
-  word-spacing: normal;
-  text-transform: none;
-  text-indent: 0px;
-  text-shadow: none;
-  text-align: center;
-  font: 400 13.3333px Arial;
+.homes-4 {
+  background: url("~assets/main/homes/1-4.jpg") no-repeat center / cover;
+}
+
+#nature {
+  background: url("~assets/main/nature/1.jpg") no-repeat center / cover;
+}
+
+.nature-1 {
+  background: url("~assets/main/nature/1-1.jpg") no-repeat center / cover;
+}
+.nature-2 {
+  background: url("~assets/main/nature/1-2.jpg") no-repeat center / cover;
+}
+.nature-3 {
+  background: url("~assets/main/nature/1-3.jpg") no-repeat center / cover;
+}
+.nature-4 {
+  background: url("~assets/main/nature/1-4.jpg") no-repeat center / cover;
+}
+
+#picnic {
+  background: url("~assets/main/picnic/1.jpg") no-repeat center / cover;
+}
+
+.picnic-1 {
+  background: url("~assets/main/picnic/1-1.jpg") no-repeat center / cover;
+}
+.picnic-2 {
+  background: url("~assets/main/picnic/1-2.jpg") no-repeat center / cover;
+}
+.picnic-3 {
+  background: url("~assets/main/picnic/1-3.jpg") no-repeat center / cover;
+}
+.picnic-4 {
+  background: url("~assets/main/picnic/1-4.jpg") no-repeat center / cover;
+}
+
+#tools {
+  background: url("~assets/main/tools/1.jpg") no-repeat center / cover;
+}
+
+.tools-1 {
+  background: url("~assets/main/tools/1-1.jpg") no-repeat center / cover;
+}
+.tools-2 {
+  background: url("~assets/main/tools/1-2.jpg") no-repeat center / cover;
+}
+.tools-3 {
+  background: url("~assets/main/tools/1-3.jpg") no-repeat center / cover;
+}
+.tools-4 {
+  background: url("~assets/main/tools/1-4.jpg") no-repeat center / cover;
+}
+
+.fill-height {
+    height: 100%;
+    width: 80%;
 }
 </style>

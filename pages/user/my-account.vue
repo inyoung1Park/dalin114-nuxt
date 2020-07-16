@@ -18,6 +18,8 @@
 
 <script>
 export default {
+  
+  layout: 'vuetify',
   middleware: 'auth'
 }
 </script>

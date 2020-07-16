@@ -50,6 +50,8 @@
 
 <script>
 export default {
+  
+  layout: 'vuetify',
   middleware: 'auth',
 
   async asyncData(context){

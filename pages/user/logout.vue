@@ -11,6 +11,7 @@
 export default {
   middleware: 'auth',
 
+  layout: 'vuetify',
   async asyncData(context){
     await context.$auth.logout()
   },

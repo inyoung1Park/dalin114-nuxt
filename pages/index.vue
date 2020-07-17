@@ -1,8 +1,6 @@
 <template>
   <div class="fullpage-container">
     <div class="fullpage-wp" v-fullpage="fullpageOptions" ref="example">
-      <!-- <div class="page-1 page">-->
-
       <div id="section1" class="page">
         <!-- <p class="part-1" v-animate="{value: 'bounceInLeft'}">111111</p> -->
         <!-- <img src="~assets/1.jpg"/>  -->
@@ -15,6 +13,7 @@
           </v-banner>
         </div>
       </div>
+
       <div id="section2" class="page">
         <v-carousel
           cycle
@@ -33,129 +32,34 @@
       </div>
 
       <div id="section3" class="page">
-        
-        <v-layout aling-center wrap>
-            <v-flex>
-            
-            <v-layout column >
-                <v-card v-for="card in cards"
-                :key="card.title"
-                :cols="card.flex"
-                v-if="card.code <= 2"
-                >
-                 <v-img
-                    class="white--text align-end"
-                    gradient=" rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                    :id="card.title"
-                    @click="detailShow(card.code)"
-                  >
-                    <v-card-title v-text="card.title"></v-card-title>
-                  </v-img>
-                </v-card>
-                </v-layout>
-
-
-              </v-flex>
-        
-          <v-flex>
-            <v-layout column>
-                <v-card v-for="card in cards"
-                :key="card.title"
-                :cols="card.flex"
-                v-if="card.code > 2"
-                >
-                 <v-img
-                    class="white--text align-end"
-                    gradient=" rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                    :id="card.title"
-                    @click="detailShow(card.code)"
-                  >
-                    <v-card-title v-text="card.title"></v-card-title>
-                  </v-img>
-                </v-card>
-                </v-layout>
-
-                
-              </v-flex>
-            
-            <v-flex fill-height fill-width>
-              <v-card cols="6">
-                 <v-carousel
-                    cycle
-                    hide-delimiter-background
-                    show-arrows-on-hover
-                  >
-                    <v-carousel-item
-                      v-for="(item, i) in cardDetails"
-                      :key="i"
-                      v-if="item.code == codeNum"
-                      :class="item.title"
-                    ></v-carousel-item>
-                  </v-carousel>
-                  </v-card>
-            </v-flex>
-            
+        <magic-grid id="section3-container">
+          <v-layout row>
+            <v-card v-for="(card, i) in cards" :key="i" :class="card.title">
+              <v-img
+                class="white--text align-end"
+                gradient=" rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                :id="card.title"
+                @click="detailShow(card.code)"
+              >
+                <v-card-title v-text="card.title"></v-card-title>
+              </v-img>
+            </v-card>
           </v-layout>
+        </magic-grid>
 
-        <!-- <div class="cards">
-          <v-card max-width="100%" outlined>
-            <v-row dense no-gutters>
-              <v-col
-                v-for="card in cards"
-                :key="card.title"
-                :cols="card.flex"
-                v-if="card.code <= 2"
-              >
-                <v-card>
-                  <v-img
-                    class="white--text align-end"
-                    gradient=" rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                    :id="card.title"
-                    @click="detailShow(card.code)"
-                  >
-                    <v-card-title v-text="card.title"></v-card-title>
-                  </v-img>
-                </v-card>
-              </v-col>
-                <v-col cols="6">
-                  <v-carousel
-                    cycle
-                    hide-delimiter-background
-                    show-arrows-on-hover
-                  >
-                    <v-carousel-item
-                      v-for="(item, i) in cardDetails"
-                      :key="i"
-                      v-if="item.code == codeNum"
-                      :class="item.title"
-                    ></v-carousel-item>
-                  </v-carousel>
-                </v-col>
-              
-              <v-col
-                v-for="card in cards"
-                :key="card.title"
-                :cols="card.flex"
-                v-if="card.code > 2"
-              >
-                <v-card>
-                  <v-img
-                    class="white--text align-end"
-                    gradient=" rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                     :id="card.title"
-                    @click="detailShow(card.code)"
-                  >
-                    <v-card-title v-text="card.title"></v-card-title>
-                  </v-img>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-card> -->
-        </div>
+        <v-card id="section3-detail">
+          <v-carousel cycle hide-delimiter-background show-arrows-on-hover>
+            <v-carousel-item
+              v-for="(item, i) in cardDetails"
+              :key="i"
+              v-if="item.code == codeNum"
+              :class="item.title"
+            ></v-carousel-item>
+          </v-carousel>
+        </v-card>
       </div>
     </div>
   </div>
-  <!-- :src="card.src" -->
 </template>
 
 <script>
@@ -332,7 +236,7 @@ export default {
 #section3 {
   /*background: url("~assets/3.jpg") no-repeat center / cover;*/
   max-width: 100%;
-  height: auto;
+  height: 100%;
 }
 
 .slide {
@@ -363,6 +267,7 @@ export default {
 .row--dense > [class*="col-"] {
   background-color: transparent;
 }
+
 @keyframes scroll-animate {
   0% {
     top: -16px;
@@ -439,8 +344,31 @@ export default {
   background: url("~assets/main/tools/1-4.jpg") no-repeat center / cover;
 }
 
-.fill-height {
-    height: 100%;
-    width: 80%;
+#section3-container div {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+#section3-container .homes {
+  height: 100px;
+  width: 100px;
+}
+#section3-container .nature {
+  height: 100px;
+  width: 100px;
+}
+#section3-container .tools {
+  height: 100px;
+  width: 100px;
+}
+#section3-container .picnic {
+  height: 100px;
+  width: 100px;
+}
+
+#section3-detail {
+  width: 800px;
+  height: auto;
 }
 </style>

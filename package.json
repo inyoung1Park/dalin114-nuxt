@@ -24,6 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.22",
     "nuxt": "^2.13.3",
+    "vue-magic-grid": "0.0.4",
     "vue-upload-component": "^2.8.20",
     "vue2-editor": "^2.10.2"
   },

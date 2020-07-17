@@ -44,8 +44,9 @@ module.exports = {
         rel: "stylesheet",
         href:
           "https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css"
-      }
-    ]
+      },
+    ],
+    
   },
   /*
    ** Customize the progress-bar color
@@ -58,7 +59,9 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: "~/plugins/fullpage", mode: "client" }],
+  plugins: [{ src: "~/plugins/fullpage", mode: "client" },
+            { src: "~/plugins/magic-grid", mode: "client"}
+],
   //plugins: [],
   /*
    ** Nuxt.js dev-modules
@@ -68,14 +71,13 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
-    // "fullpage-vue",
+    
     // Doc: https://bootstrap-vue.js.org
     "bootstrap-vue/nuxt",
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
-    "@nuxtjs/auth"
-
-    //"@nuxtjs/vuetify",
+    "@nuxtjs/auth",
+    
   ],
 
   /*

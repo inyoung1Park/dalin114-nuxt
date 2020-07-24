@@ -4,7 +4,7 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: "114도와주세요!!",
+    title: "114",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -44,9 +44,8 @@ module.exports = {
         rel: "stylesheet",
         href:
           "https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css"
-      },
-    ],
-    
+      }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -59,9 +58,10 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: "~/plugins/fullpage", mode: "client" },
-            { src: "~/plugins/magic-grid", mode: "client"}
-],
+  plugins: [
+    { src: "~/plugins/fullpage", mode: "client" },
+    { src: "~/plugins/magic-grid", mode: "client" }
+  ],
   //plugins: [],
   /*
    ** Nuxt.js dev-modules
@@ -71,13 +71,11 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
-    
     // Doc: https://bootstrap-vue.js.org
     "bootstrap-vue/nuxt",
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
-    "@nuxtjs/auth",
-    
+    "@nuxtjs/auth"
   ],
 
   /*

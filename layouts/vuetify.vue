@@ -21,24 +21,41 @@
   margin-bottom: 10px !important;
 }
 
-.top_btn {
-  transform-origin: center center;
-  height: 64px;
-  width: 64px;
-  right: 16px;
-  position: fixed;
-  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
-    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+.main-banner {
+  width: auto;
+  height: auto;
+  max-width: 130px;
+  max-height: 40px;
 }
 
+.main-call {
+  right: 100%;
+  width: auto;
+  height: auto;
+  max-width: 170px;
+  max-height: 55px;
+}
+
+.main-app {
+  right: 40%;
+  width: auto;
+  height: auto;
+  max-width: 155px;
+  max-height: 55px;
+}
 </style>
 
 <template>
   <v-app dark>
-   <!-- <v-navigation-drawer v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed app>-->
-     <v-navigation-drawer v-model="drawer" temporary absolute app>
-      <v-list v-if="!$auth.loggedIn"> 
-        <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
+    <v-navigation-drawer v-model="drawer" temporary absolute app>
+      <v-list v-if="!$auth.loggedIn">
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+        >
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -47,8 +64,14 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <v-list v-if="$auth.loggedIn"> 
-        <v-list-item v-for="(item, i) in userItems" :key="i" :to="item.to" router exact>
+      <v-list v-if="$auth.loggedIn">
+        <v-list-item
+          v-for="(item, i) in userItems"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+        >
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -58,38 +81,52 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <!-- <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? "right" : "left"}` }}</v-icon>
-      </v-btn> -->
-      <!-- <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
+    <v-app-bar absolute id="app-bar" flat app>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"> </v-app-bar-nav-icon>
+    
+      <v-toolbar-side-icon>
+        <v-img
+          class="main-banner"
+          :src="require('@/assets/icon/main_icon.png')"
+        >
+        </v-img>
+      </v-toolbar-side-icon>
+
+      <v-spacer></v-spacer>
+     <v-btn icon @click.stop="fixed = !fixed">
+        <v-img
+          :right="right"
+          class="main-call"
+          :src="require('@/assets/icon/main_call.png')"
+        ></v-img>
+      </v-btn> 
+      <v-btn icon @click.stop="clipped = !clipped">
+        <v-img
+          :right="right"
+          class="main-app"
+          :src="require('@/assets/icon/main_appDown.png')"
+        ></v-img>
       </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn> -->
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
+
+      <!-- <v-toolbar-title class="elevation-0">
+      </v-toolbar-title>-->
       <!-- <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
-      </v-btn> -->
+      </v-btn>-->
     </v-app-bar>
     <v-content>
       <v-container>
         <nuxt />
       </v-container>
     </v-content>
-    <!-- <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
+    <!--
+      
+     <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
       <v-list>
         <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>mdi-repeat</v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
+           </v-list-item>
       </v-list>
-    </v-navigation-drawer> -->
+    </v-navigation-drawer>-->
     <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
@@ -98,7 +135,6 @@
 
 <script>
 export default {
-
   data() {
     return {
       clipped: false,
@@ -118,7 +154,7 @@ export default {
         },
         { icon: "mdi-chat-plus-outline", title: "게시판", to: "/articles/" },
         { icon: "mdi-heart-outline", title: "로그인", to: "/user/login" },
-        { icon: "mdi-charity", title: "회원가입", to: "/user/register" },
+        { icon: "mdi-charity", title: "회원가입", to: "/user/register" }
       ],
       userItems: [
         {
@@ -137,8 +173,7 @@ export default {
       ],
       miniVariant: false,
       right: true,
-      rightDrawer: false,
-      title: "test"
+      rightDrawer: false
     };
   }
   //if()

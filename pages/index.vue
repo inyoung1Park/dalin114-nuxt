@@ -1,374 +1,177 @@
 <template>
   <div class="fullpage-container">
-    <div class="fullpage-wp" v-fullpage="fullpageOptions" ref="example">
-      <div id="section1" class="page">
-        <!-- <p class="part-1" v-animate="{value: 'bounceInLeft'}">111111</p> -->
-        <!-- <img src="~assets/1.jpg"/>  -->
-        <div class="banner">
-          <v-banner v-model="v0" single-line transition="slide-y-transition">
-            홈페이지 OPEN EVENT
-            <template v-slot:actions="{ dismiss }">
-              <v-btn text color="gray" @click="dismiss">안보이기</v-btn>
-            </template>
-          </v-banner>
+    <div class="button-group">
+      <button type="button" :class="{ active: index == 0 }" @click="moveTo(0)">
+        first page
+      </button>
+      <button type="button" :class="{ active: index == 1 }" @click="moveTo(1)">
+        Second page
+      </button>
+      <button type="button" :class="{ active: index == 2 }" @click="moveTo(2)">
+        Third page
+      </button>
+      <button
+        type="button"
+        v-for="btn in pageNum"
+        :key="btn"
+        :class="{ active: index == btn + 2 }"
+        @click="moveTo(btn + 2)"
+      >
+        page {{ btn + 2 }}
+      </button>
+      <button type="button" @click="showPage()">add page</button>
+    </div>
+    <v-sheet id="fullpage-hide">
+      <div class="fullpage-wp" v-fullpage="opts" ref="fullpage">
+        <div class="page-1 page">
+          <h1 class="part-1" v-animate="{ value: 'bounceInLeft' }">
+            vue-fullpage.js
+          </h1>
+          <h3 class v-animate="{ value: 'bounceInLeft' }">
+            A sigle-page scroll plugin based on vue@2.x,support for mobile and
+            PC .
+          </h3>
+          <div>
+            <p class="part-1" v-animate="{ value: 'bounceInRight' }">
+              vue-fullpage
+            </p>
+          </div>
+        </div>
+        <div class="page-2 page" id="hide-scroll">
+          <h2 class="part-2" v-animate="{ value: 'bounceInRight' }">
+            Easy to use plugin
+          </h2>
+        </div>
+        <div class="page-3 page" id="hide-scroll">
+          <h2 class v-animate="{ value: 'bounceInTop' }">Working On Tablets</h2>
+          <h3 class v-animate="{ value: 'bounceInBotton' }">
+            Designed to fit different screen sizes as well as tablet and mobile
+            devices.
+          </h3>
+          <p class="part-3" v-animate="{ value: 'bounceInLeft', delay: 0 }">
+            vue-fullpage
+          </p>
+          <p class="part-3" v-animate="{ value: 'bounceInRight', delay: 300 }">
+            vue-fullpage
+          </p>
+          <p class="part-3" v-animate="{ value: 'bounceInDown', delay: 600 }">
+            vue-fullpage
+          </p>
+          <p class="part-3" v-animate="{ value: 'zoomInDown', delay: 900 }">
+            vue-fullpage
+          </p>
+        </div>
+        <div class="page-2 page" v-for="page in pageNum" :key="page">
+          <h2 class="part-2" v-animate="{ value: 'bounceInRight' }">
+            page {{ page }}
+          </h2>
         </div>
       </div>
-
-      <div id="section2" class="page">
-        <v-carousel
-          cycle
-          height="100%"
-          hide-delimiter-background
-          show-arrows-on-hover
-        >
-          <v-carousel-item v-for="(slide, i) in 3" :key="i">
-            <v-sheet :color="colors[i]" height="100%">
-              <div v-if="i == 0" class="slide slide1"></div>
-              <div v-if="i == 1" class="slide slide2"></div>
-              <div v-if="i == 2" class="slide slide3"></div>
-            </v-sheet>
-          </v-carousel-item>
-        </v-carousel>
-      </div>
-
-      <div id="section3" class="page">
-        <magic-grid id="section3-container">
-          <v-layout row>
-            <v-card v-for="(card, i) in cards" :key="i" :class="card.title">
-              <v-img
-                class="white--text align-end"
-                gradient=" rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                :id="card.title"
-                @click="detailShow(card.code)"
-              >
-                <v-card-title v-text="card.title"></v-card-title>
-              </v-img>
-            </v-card>
-          </v-layout>
-        </magic-grid>
-
-        <v-card id="section3-detail">
-          <v-carousel cycle hide-delimiter-background show-arrows-on-hover>
-            <v-carousel-item
-              v-for="(item, i) in cardDetails"
-              :key="i"
-              v-if="item.code == codeNum"
-              :class="item.title"
-            ></v-carousel-item>
-          </v-carousel>
-        </v-card>
-      </div>
-    </div>
+    </v-sheet>
   </div>
+
+  
 </template>
 
 <script>
-import Logo from "~/components/Logo.vue";
-
 export default {
-  components: {
-    Logo
-  },
+  name: "Fullpage",
   layout: "vuetify",
-  scrollTop: true,
-  data: () => ({
-    colors: ["white", "white", "white"],
-    slides: ["First", "Second", "Third"],
-    mainStyle: "padding:0px",
-    vueName: "index",
-    codeNum: 1,
-    fullpageOptions: {
-      start: 0,
-      duration: 500,
-      crollingSpeed: 300,
-      anchors: ["firstPage", "secondPage", "thirdPage"],
-      navigation: true,
-      navigationTooltips: ["first", "second", "thrid"],
-      slidesNavigation: true,
-      slidesNavPosition: "bottom",
-      autoScrolling: true,
-      fitToSection: true,
-      scrollBar: false,
-      loopBottom: true,
-      beforeChange: function(currentSlideEl, currenIndex, nextIndex) {},
-      afterChange: function(currentSlideEl, currenIndex) {}
-    },
-    v0: true,
-    cards: [
-      {
-        title: "homes",
-        flex: 3,
-        code: 1
-      },
+  data() {
+    return {
+      index: 0,
+      pageNum: 0,
+      opts: {
+        start: 0,
+        dir: "v",
+        loop: false,
+        duration: 300,
+        beforeChange: function(ele, current, next) {
+          this.index = next;
+        },
+        afterChange: function(ele, current) {
+          this.index = current;
 
-      {
-        title: "nature",
-        flex: 3,
-        code: 2
-      },
-      {
-        title: "tools",
-        flex: 3,
-        code: 3
-      },
-      {
-        title: "picnic",
-        flex: 3,
-        code: 4
+          var con = document.getElementById("app-bar");
+          var mainCon = document.getElementById("fullpage-app");
+          if (current == 1 || current == 2) {
+            //con.style.display = "none";
+            //con.classList.add("inverted-scroll");
+          } else {
+            //     mainCon.style.padding = "56px 0px 0px 0px";
+            // con.style.display = "block";
+            //con.classList.add("inverted-scroll");
+          }
+        }
       }
-    ],
-    cardDetails: [
-      {
-        title: "homes-1",
-        code: 1
-      },
-      {
-        title: "homes-2",
-        code: 1
-      },
-      {
-        title: "homes-3",
-        code: 1
-      },
-      {
-        title: "homes-4",
-        code: 1
-      },
-      {
-        title: "nature-1",
-        code: 2
-      },
-      {
-        title: "nature-2",
-        code: 2
-      },
-      {
-        title: "nature-3",
-        code: 2
-      },
-      {
-        title: "nature-4",
-        code: 2
-      },
-      {
-        title: "tools-1",
-        code: 3
-      },
-      {
-        title: "tools-2",
-        code: 3
-      },
-      {
-        title: "tools-3",
-        code: 3
-      },
-      {
-        title: "tools-4",
-        code: 3
-      },
-      {
-        title: "picnic-1",
-        code: 4
-      },
-      {
-        title: "picnic-2",
-        code: 4
-      },
-      {
-        title: "picnic-3",
-        code: 4
-      },
-      {
-        title: "picnic-4",
-        code: 4
-      }
-    ]
-  }),
+    };
+  },
   methods: {
-    detailShow(param) {
-      this.codeNum = param;
-      console.log("codeNum: " + this.codeNum);
-    }
-    /*moveNext() {
-      // this.$refs.example.$fullpage.moveNext(); //Move to the next page
-      this.section2PageNum = this.section2PageNum + 1;
-      if (this.section2PageNum > 2) {
-        this.section2PageNum = 0;
-      }
+    moveTo: function(index) {
+      this.$refs.fullpage.$fullpage.moveTo(index, true);
     },
-    movePrev() {
-      // this.$refs.example.$fullpage.movePrev(); //Move to the next page
-      this.section2PageNum = this.section2PageNum - 1;
-      if (this.section2PageNum < 0) {
-        this.section2PageNum = 2;
-      }
-    } */
-  },
-  destroyed() {
-    console.log("destroy = " + this.vueName);
-  },
-  created() {
-    console.log("created = " + this.vueName);
+    showPage: function() {
+      this.pageNum++;
+      this.$refs.fullpage.$fullpage.$update();
+    }
   }
 };
 </script>
 
 <style>
+body {
+  margin: 0;
+}
 .fullpage-container {
   position: absolute;
   left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-#section1 {
-  background: url("~assets/1.jpg") no-repeat center / cover;
-  max-width: 100%;
-  height: auto;
-}
-
-#section2 {
-  max-width: 100%;
-  height: auto;
-}
-#section3 {
-  /*background: url("~assets/3.jpg") no-repeat center / cover;*/
-  max-width: 100%;
-  height: 100%;
-}
-
-.slide {
+  top: 0px;
   width: 100%;
   height: 100%;
 }
-
-.slide1 {
-  background: url("~assets/2-1.jpg") no-repeat center / cover;
-  max-width: 100%;
+.page {
+  padding: 0 0 0 0;
+  display: block;
+  text-align: center;
+  font-size: 26px;
+  color: #eee;
 }
-
-.slide2 {
-  background: url("~assets/2-2.jpg") no-repeat center / cover;
-  max-width: 100%;
+.page-1 {
+  padding-top: 100px;
+  background: #1bbc9b;
 }
-
-.slide3 {
-  background: url("~assets/2-3.jpg") no-repeat center / cover;
-  max-width: 100%;
+.page-2 {
+  padding-top: 100px;
+  background-color: rgb(75, 191, 195);
 }
-
-.banner {
-  background-color: bisque;
+.page-3 {
+  padding-top: 50px;
+  background: #aabbcc;
 }
-
-.row--dense > .col,
-.row--dense > [class*="col-"] {
-  background-color: transparent;
+h3,
+p {
+  font-size: 16px;
 }
-
-@keyframes scroll-animate {
-  0% {
-    top: -16px;
-  }
-  100% {
-    top: 72px;
-  }
+.button-group {
+  position: absolute;
+  top: 70px;
+  left: 30px;
+  z-index: 9;
 }
-
-#homes {
-  background: url("~assets/main/homes/1.jpg") no-repeat center / cover;
+.button-group button {
+  display: inline-block;
+  margin: 10px;
+  color: #000;
+  background: #fff;
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  padding: 9px 18px;
+  border: none;
+  outline: none;
 }
-.homes-1 {
-  background: url("~assets/main/homes/1-1.jpg") no-repeat center / cover;
-}
-.homes-2 {
-  background: url("~assets/main/homes/1-2.jpg") no-repeat center / cover;
-}
-.homes-3 {
-  background: url("~assets/main/homes/1-3.jpg") no-repeat center / cover;
-}
-.homes-4 {
-  background: url("~assets/main/homes/1-4.jpg") no-repeat center / cover;
-}
-
-#nature {
-  background: url("~assets/main/nature/1.jpg") no-repeat center / cover;
-}
-
-.nature-1 {
-  background: url("~assets/main/nature/1-1.jpg") no-repeat center / cover;
-}
-.nature-2 {
-  background: url("~assets/main/nature/1-2.jpg") no-repeat center / cover;
-}
-.nature-3 {
-  background: url("~assets/main/nature/1-3.jpg") no-repeat center / cover;
-}
-.nature-4 {
-  background: url("~assets/main/nature/1-4.jpg") no-repeat center / cover;
-}
-
-#picnic {
-  background: url("~assets/main/picnic/1.jpg") no-repeat center / cover;
-}
-
-.picnic-1 {
-  background: url("~assets/main/picnic/1-1.jpg") no-repeat center / cover;
-}
-.picnic-2 {
-  background: url("~assets/main/picnic/1-2.jpg") no-repeat center / cover;
-}
-.picnic-3 {
-  background: url("~assets/main/picnic/1-3.jpg") no-repeat center / cover;
-}
-.picnic-4 {
-  background: url("~assets/main/picnic/1-4.jpg") no-repeat center / cover;
-}
-
-#tools {
-  background: url("~assets/main/tools/1.jpg") no-repeat center / cover;
-}
-
-.tools-1 {
-  background: url("~assets/main/tools/1-1.jpg") no-repeat center / cover;
-}
-.tools-2 {
-  background: url("~assets/main/tools/1-2.jpg") no-repeat center / cover;
-}
-.tools-3 {
-  background: url("~assets/main/tools/1-3.jpg") no-repeat center / cover;
-}
-.tools-4 {
-  background: url("~assets/main/tools/1-4.jpg") no-repeat center / cover;
-}
-
-#section3-container div {
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-}
-
-#section3-container .homes {
-  height: 100px;
-  width: 100px;
-}
-#section3-container .nature {
-  height: 100px;
-  width: 100px;
-}
-#section3-container .tools {
-  height: 100px;
-  width: 100px;
-}
-#section3-container .picnic {
-  height: 100px;
-  width: 100px;
-}
-
-#section3-detail {
-  width: 800px;
-  height: auto;
+.button-group button.active {
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
 }
 </style>

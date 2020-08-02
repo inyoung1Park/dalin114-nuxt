@@ -1,26 +1,6 @@
 <template>
   <div class="fullpage-container">
     <div class="button-group">
-      <!-- <button type="button" :class="{ active: index == 0 }" @click="moveTo(0)">
-        first page
-      </button>
-      <button type="button" :class="{ active: index == 1 }" @click="moveTo(1)">
-        Second page
-      </button>
-      <button type="button" :class="{ active: index == 2 }" @click="moveTo(2)">
-        Third page
-      </button>
-      <button
-        type="button"
-        v-for="btn in pageNum"
-        :key="btn"
-        :class="{ active: index == btn + 2 }"
-        @click="moveTo(btn + 2)"
-      > :class="{ active: index == 0 }"
-        page {{ btn + 2 }}
-      </button> 
-      <button type="button" @click="showPage()">add page</button>-->
-
       <v-img
         :src="require('@/assets/icon/main_scroll.png')"
         class="scroll-button"
@@ -29,56 +9,99 @@
     </div>
     <div class="fullpage-wp" v-fullpage="opts" ref="fullpage">
       <div class="page-1 page">
-        <!-- <h1 class="part-1" v-animate="{ value: 'bounceInLeft' }">vue-fullpage.js</h1>
-        <h3 class v-animate="{ value: 'bounceInLeft' }">
-          A sigle-page scroll plugin based on vue@2.x,support for mobile and PC
-          .
-        </h3>
-        <div>
-          <p class="part-1" v-animate="{ value: 'bounceInRight' }">vue-fullpage</p>
-        </div>
-        <div> 
-        open-on-hover</div>-->
+        <v-navigation-drawer v-model="drawer" temporary absolute app>
+          <v-list v-if="!$auth.loggedIn">
+            <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
+              <v-list-item-action>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title v-text="item.title" />
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <v-list v-if="$auth.loggedIn">
+            <v-list-item v-for="(item, i) in userItems" :key="i" :to="item.to" router exact>
+              <v-list-item-action>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title v-text="item.title" />
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-navigation-drawer>
 
-        <div class="d-flex justify-end align-end">
-          <v-card flat tile style="background: transparent;">
-            <v-menu
-              transition="scale-transition"
-              origin="center center"
-              v-for="(list, i) in btns"
-              :key="i"
-              rounded="0"
-              tile
-              offset-y
-              open-on-hover
-              @mouseup="detailMenu(list.title)"
-            >
-              <template v-slot:activator="{ attrs, on }">
+        <v-app-bar absolute flat>
+          <!--<v-app-bar-nav @click.stop="drawer = !drawer"></v-app-bar-nav> -->
+
+          <v-img
+            @click.stop="drawer = !drawer"
+            class="main-banner"
+            :src="require('@/assets/icon/main_icon.png')"
+          ></v-img>
+
+          <v-spacer></v-spacer>
+
+          <v-menu
+            transition="slide-y-transition"
+            v-for="(item, index) in menuLists"
+            :key="index"
+            offset-y
+          >
+            <template v-slot:activator="{ attrs, on }">
+              <div class="my-2">
                 <v-btn
+                  tile
                   text
-                  color="grey darken-2"
-                  class="white--text ma-8"
                   v-bind="attrs"
                   v-on="on"
-                >{{ list.title }}</v-btn>
-              </template>
-              <!-- -->
-              <v-list active-class="pink--text">
+                  @click="detailMenu(item.code)"
+                >{{item.title}}</v-btn>
+              </div>
+            </template>
+
+            <div v-if=" 'intro'== codeTitle">
+              <v-list tile>
                 <v-list-item
-                  v-for="(detail, i) in menuItems"
+                  v-for="(item, i) in introLists"
                   :key="i"
-                  :v-if="codeTitle == detail.title"
-                  link
+                  @click="detailMenu(item.code)"
                 >
-                  <v-list-item-title v-text="detail.title"></v-list-item-title>
+                  <v-list-item-title>{{ item.title }}</v-list-item-title>
                 </v-list-item>
               </v-list>
-            </v-menu>
-          </v-card>
-        </div>
+            </div>
+
+            <div v-if=" 'alloc'== codeTitle">
+              <v-list>
+                <v-list-item
+                  v-for="(item, i) in allocLists"
+                  :key="i"
+                  @click="detailMenu(item.code)"
+                >
+                  <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </div>
+          </v-menu>
+        </v-app-bar>
 
         <div class="page-1-main">
-          <v-img :src="require('@/assets/main/main_center.png')" class="main-center"></v-img>
+          <div class="page-1-main-left">
+            <v-img :src="require('@/assets/main/working/intro-ment.png')" class="intro-ment"></v-img>
+            <div class="page-1-main-left-detail">
+              <v-img :src="require('@/assets/main/working/icon-call.png')" class="intro-icon"></v-img>
+              <h6>전화 상담 문의 바로 연결</h6>
+              <v-img :src="require('@/assets/main/working/icon-app.png')" class="intro-icon"></v-img>
+              <h6>달인114 앱 다운로드 페이지 이동</h6>
+              <v-img :src="require('@/assets/main/working/icon-alloc.png')" class="intro-icon"></v-img>
+              <h6>배차 신청 페이지 이동</h6>
+            </div>
+          </div>
+          <div class="page-1-main-right">
+            <v-img :src="require('@/assets/main/working/intro-phone.png')" class></v-img>
+          </div>
         </div>
       </div>
       <div class="page-2 page" id="hide-scroll">
@@ -98,6 +121,51 @@
       <div class="page-2 page" v-for="page in pageNum" :key="page">
         <h2 class="part-2" v-animate="{ value: 'bounceInRight' }">page {{ page }}</h2>
       </div>
+
+      <div class="page-4 page" id="hide-scroll">
+        <h2 class v-animate="{ value: 'bounceInTop' }">Working On Tablets</h2>
+        <h3 class v-animate="{ value: 'bounceInBotton' }">
+          Designed to fit different screen sizes as well as tablet and mobile
+          devices.
+        </h3>
+        <p class="part-3" v-animate="{ value: 'bounceInLeft', delay: 0 }">vue-fullpage</p>
+        <p class="part-3" v-animate="{ value: 'bounceInRight', delay: 300 }">vue-fullpage</p>
+        <p class="part-3" v-animate="{ value: 'bounceInDown', delay: 600 }">vue-fullpage</p>
+        <p class="part-3" v-animate="{ value: 'zoomInDown', delay: 900 }">vue-fullpage</p>
+      </div>
+      <div class="page-5 page" id="hide-scroll">
+        <h2 class v-animate="{ value: 'bounceInTop' }">Working On Tablets</h2>
+        <h3 class v-animate="{ value: 'bounceInBotton' }">
+          Designed to fit different screen sizes as well as tablet and mobile
+          devices.
+        </h3>
+        <p class="part-3" v-animate="{ value: 'bounceInLeft', delay: 0 }">vue-fullpage</p>
+        <p class="part-3" v-animate="{ value: 'bounceInRight', delay: 300 }">vue-fullpage</p>
+        <p class="part-3" v-animate="{ value: 'bounceInDown', delay: 600 }">vue-fullpage</p>
+        <p class="part-3" v-animate="{ value: 'zoomInDown', delay: 900 }">vue-fullpage</p>
+      </div>
+      <div class="page-6 page" id="hide-scroll">
+        <h2 class v-animate="{ value: 'bounceInTop' }">Working On Tablets</h2>
+        <h3 class v-animate="{ value: 'bounceInBotton' }">
+          Designed to fit different screen sizes as well as tablet and mobile
+          devices.
+        </h3>
+        <p class="part-3" v-animate="{ value: 'bounceInLeft', delay: 0 }">vue-fullpage</p>
+        <p class="part-3" v-animate="{ value: 'bounceInRight', delay: 300 }">vue-fullpage</p>
+        <p class="part-3" v-animate="{ value: 'bounceInDown', delay: 600 }">vue-fullpage</p>
+        <p class="part-3" v-animate="{ value: 'zoomInDown', delay: 900 }">vue-fullpage</p>
+      </div>
+      <div class="page-4 page" id="hide-scroll">
+        <h2 class v-animate="{ value: 'bounceInTop' }">Working On Tablets</h2>
+        <h3 class v-animate="{ value: 'bounceInBotton' }">
+          Designed to fit different screen sizes as well as tablet and mobile
+          devices.
+        </h3>
+        <p class="part-3" v-animate="{ value: 'bounceInLeft', delay: 0 }">vue-fullpage</p>
+        <p class="part-3" v-animate="{ value: 'bounceInRight', delay: 300 }">vue-fullpage</p>
+        <p class="part-3" v-animate="{ value: 'bounceInDown', delay: 600 }">vue-fullpage</p>
+        <p class="part-3" v-animate="{ value: 'zoomInDown', delay: 900 }">vue-fullpage</p>
+      </div>
     </div>
   </div>
 </template>
@@ -108,7 +176,7 @@ export default {
   layout: "vuetify",
   data() {
     return {
-      codeTitle: 0,
+      codeTitle: "intro",
       index: 1,
       pageNum: 0,
       opts: {
@@ -116,67 +184,93 @@ export default {
         dir: "v",
         loop: false,
         duration: 300,
-        beforeChange: function (ele, current, next) {
-          this.index = next;
-        },
-        afterChange: function (ele, current) {
-          this.index = current;
-
-          var con = document.getElementById("app-bar");
-          var mainCon = document.getElementById("fullpage-app");
-          if (current == 1 || current == 2) {
-            //con.style.display = "none";
-            //con.classList.add("inverted-scroll");
-          } else {
-            //     mainCon.style.padding = "56px 0px 0px 0px";
-            // con.style.display = "block";
-            //con.classList.add("inverted-scroll");
-          }
-        },
+        beforeChange: function (ele, current, next) {},
+        afterChange: function (ele, current) {},
       },
-      btns: [
+      menuLists: [
         {
           title: "작업사진",
-          code: 0,
+          code: "working",
         },
         {
           title: "소개",
-          code: 1,
+          code: "intro",
         },
-        {
-          title: "배차신청",
-          code: 2,
-        },
-        {
-          title: "파트너등록",
-          code: 3,
-        },
-        {
-          title: "자주묻는질문",
-          code: 4,
-        },
+        { title: "배차신청", code: "alloc" },
+        { title: "파트너등록", code: "partner" },
       ],
-      colors: ["deep-purple accent-4", "error", "teal darken-1"],
-      // items: [...Array(4)].map((_, i) => `Item ${i}`),
-      menuItems: [
+      introLists: [
         {
           title: "달인114 소개",
-          code: 1,
+          code: "intro-1",
+        },
+        { title: "APP 서비스", code: "intro-2" },
+      ],
+      allocLists: [
+        {
+          title: "신청게시판",
+          code: "alloc-1",
+        },
+        { title: "신청하기", code: "alloc-2" },
+      ],
+      //여기서부터
+      clipped: false,
+      drawer: false,
+      fixed: false,
+      pageNum: 0,
+      items: [
+        {
+          icon: "mdi-apps",
+          title: "홈",
+          to: "/",
         },
         {
-          title: "소비자 서비스",
-          code: 1,
+          icon: "mdi-chart-bubble",
+          title: "안내",
+          to: "/inspire",
         },
-        { title: "파트너 서비스", code: 1 },
-        { title: "신청게시판", code: 2 },
-        { title: "신청하기", code: 2 },
+        { icon: "mdi-chat-plus-outline", title: "게시판", to: "/articles/" },
+        { icon: "mdi-heart-outline", title: "로그인", to: "/user/login" },
+        { icon: "mdi-charity", title: "회원가입", to: "/user/register" },
       ],
+      userItems: [
+        {
+          icon: "mdi-apps",
+          title: "홈",
+          to: "/",
+        },
+        {
+          icon: "mdi-chart-bubble",
+          title: "안내",
+          to: "/inspire",
+        },
+        { icon: "mdi-chat-plus-outline", title: "게시판", to: "/articles/" },
+        { icon: "mdi-heart-outline", title: "로그아웃", to: "/user/logout" },
+        { icon: "mdi-account", title: "내 정보", to: "/user/my-account" },
+      ],
+      miniVariant: false,
+      right: true,
+      rightDrawer: false,
     };
   },
   methods: {
     detailMenu(param) {
       this.codeTitle = param;
-      console.log(this.codeTitle);
+      if (this.codeTitle == "intro-1") {
+        this.$refs.fullpage.$fullpage.moveTo(1, true);
+      }
+      if (this.codeTitle == "intro-2") {
+        this.$refs.fullpage.$fullpage.moveTo(2, true);
+      }
+      if (this.codeTitle == "alloc-1") {
+        this.$refs.fullpage.$fullpage.moveTo(3, true);
+      }
+      if (this.codeTitle == "alloc-2") {
+        this.$refs.fullpage.$fullpage.moveTo(3, true);
+      }
+      if (this.codeTitle == "partner") {
+        this.$refs.fullpage.$fullpage.moveTo(5, true);
+      }
       return param;
     },
     moveTo: function (index) {
@@ -202,23 +296,32 @@ body {
   width: 100%;
   height: 100%;
 }
+
+.theme--light.v-app-bar.v-toolbar.v-sheet {
+  background-color: #f0f9ff;
+}
+
 .page {
   padding: 0 0 0 0;
   display: block;
   text-align: center;
   font-size: 26px;
-  color: #eee;
+  color: #444444;
 }
 .page-1 {
-  background: #e8e8e8;
+  background-color: #f0f9ff;
 }
 .page-2 {
-  padding-top: 100px;
+  /*padding-top: 100px;*/
   background-color: rgb(75, 191, 195);
 }
 .page-3 {
-  padding-top: 50px;
+  /*padding-top: 50px;*/
   background: #aabbcc;
+}
+.page-4 {
+  /*padding-top: 50px;*/
+  background: yellowgreen;
 }
 h3,
 p {
@@ -233,20 +336,41 @@ p {
 }
 
 .scroll-button {
-  width: 10%;
+  width: 15%;
   height: auto;
   text-align: center;
 }
 .page-1-main {
-  padding-top: 10vw;
-}
-.main-center {
+  padding-top: 5vw;
   position: absolute;
-  max-width: 55vw;
+  max-width: 70vw;
+  max-height: 70vw;
   left: 20%;
+  width: auto;
   height: auto;
+  display: inline-flex;
+}
+.page-1-main-left {
+  max-width: 40%;
+  padding-top: 9%;
+  padding-left: 10%;
+  margin-right: 5%;
+  text-align: left;
+}
+.page-1-main-left-detail {
+  margin-left: 6%;
+}
+.page-1-main-right {
+  max-width: 40%;
 }
 
+.intro-ment {
+  margin-bottom: 10%;
+}
+.intro-icon {
+  width: 17vw;
+  height: auto;
+}
 .menu-list {
   float: left;
   width: auto;

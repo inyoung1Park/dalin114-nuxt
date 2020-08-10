@@ -92,11 +92,11 @@
             <v-img :src="require('@/assets/main/working/intro-ment.png')" class="intro-ment"></v-img>
             <div class="page-1-main-left-detail">
               <v-img :src="require('@/assets/main/working/icon-call.png')" class="intro-icon"></v-img>
-              <h6>전화 상담 문의 바로 연결</h6>
+              <h6>&nbsp;&nbsp;전화 상담 문의 바로 연결</h6>
               <v-img :src="require('@/assets/main/working/icon-app.png')" class="intro-icon"></v-img>
-              <h6>달인114 앱 다운로드 페이지 이동</h6>
+              <h6>&nbsp;&nbsp;달인114 앱 다운로드 페이지 이동</h6>
               <v-img :src="require('@/assets/main/working/icon-alloc.png')" class="intro-icon"></v-img>
-              <h6>배차 신청 페이지 이동</h6>
+              <h6>&nbsp;&nbsp;배차 신청 페이지 이동</h6>
             </div>
           </div>
           <div class="page-1-main-right">
@@ -150,24 +150,28 @@
         <div class="page-2-main">
           <div class="page-2-font">
             <div class="page-2-font-detail">
-              <h2 style="color: #4386AF;">달인114</h2>
-              <h2>의 작업사진</h2>
+              <h2 style="color: #4386AF; font-weight: bold;">달인114</h2>
+              <h2 style="font-weight: bold;">의 작업사진</h2>
             </div>
             <div class>
               <v-img :src="require('@/assets/side/side-camera.png')" class="page-2-camera"></v-img>
             </div>
           </div>
           <div>
-            <h3 style="color: grey; display:flex;">달인114와 함께한 작업현장을 확인해보세요!</h3>
+            <h3 style="color: grey; display:flex; padding-left: 10px;">달인114와 함께한 작업현장을 확인해보세요!</h3>
           </div>
 
           <div class="page-2-grid">
-            <div style="display: flex;">
+            <div class="grid-item">
               <v-img v-if="isToggle" :src="grid_1" @click="detailShow('grid-1')"></v-img>
+            </div>
+            <div class="grid-item">
               <v-img :src="require('@/assets/side/grid-2.png')" @click="detailShow('grid-2')"></v-img>
             </div>
-            <div style="display: flex;">
+            <div class="grid-item-2">
               <v-img :src="require('@/assets/side/grid-3.png')" @click="detailShow('grid-3')"></v-img>
+            </div>
+            <div class="grid-item-2">
               <v-img :src="require('@/assets/side/grid-4.png')" @click="detailShow('grid-4')"></v-img>
             </div>
           </div>
@@ -247,6 +251,14 @@
 
 <script>
 export default {
+  head: {
+    link: [
+      {
+        rel: "stylesheet",
+        href: "https://cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css",
+      },
+    ],
+  },
   name: "Fullpage",
   layout: "vuetify",
   data() {
@@ -391,6 +403,12 @@ export default {
 </script>
 
 <style>
+* {
+  font-family: "Nanum Square";
+}
+.h6 {
+  font-size: 0.8rem;
+}
 body {
   margin: 0;
 }
@@ -503,11 +521,11 @@ p {
 }
 
 .page-2-main-grid-detail {
-  padding-top: 15vw;
+  padding-top: 11vw;
   position: inherit;
   max-width: 45vw;
   max-height: auto;
-  left: 45vw;
+  left: 40vw;
   display: flex;
 }
 .page-2-camera {
@@ -519,11 +537,12 @@ p {
   display: flex;
   /*padding-top: 13px;
   margin-right: 10px;*/
+  padding-left: 10px;
 }
 .page-2-grid {
   width: 100%;
   height: 100%;
-  max-width: 15vw;
+  max-width: 25vw;
   max-height: auto;
 }
 
@@ -532,7 +551,15 @@ p {
   padding-top: 15px;
   margin-right: 10px;
 }
+.grid-item {
+  display: inline-block;
+  max-width: 12vw;
+}
 
+.grid-item-2 {
+  display: inline-block;
+  max-width: 12vw;
+}
 .grid-1-1 {
   background: url("~assets/side/grid/1-1.jpg") no-repeat center / cover;
 }

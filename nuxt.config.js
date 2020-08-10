@@ -44,6 +44,10 @@ module.exports = {
         rel: "stylesheet",
         href:
           "https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css"
+      },
+      {
+        rel: "stylesheet",
+        href: "//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css"
       }
     ]
   },

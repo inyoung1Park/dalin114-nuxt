@@ -1,11 +1,13 @@
 <template>
   <div class="fullpage-container">
     <div class="button-group">
-      <v-img
-        :src="require('@/assets/icon/main_scroll.png')"
-        class="scroll-button"
-        @click="moveTo(index)"
-      ></v-img>
+      <div id="test">
+        <v-img
+          :src="require('@/assets/icon/main_scroll.png')"
+          class="scroll-button"
+          @click="moveTo(index)"
+        ></v-img>
+      </div>
     </div>
     <div class="fullpage-wp" v-fullpage="opts" ref="fullpage">
       <div class="page-1 page">
@@ -89,14 +91,20 @@
 
         <div class="page-1-main">
           <div class="page-1-main-left">
-            <v-img :src="require('@/assets/main/working/intro-ment.png')" class="intro-ment"></v-img>
+            <!--<v-img :src="require('@/assets/main/working/intro-ment.png')" class="intro-ment"></v-img>-->
+            <div class="intro-ment">
+              <p>
+                <strong class="extraB">전국 언제 어디서든,</strong>
+              </p>
+              <p class="light">간편한 건설기계 매칭 플랫폼</p>
+            </div>
             <div class="page-1-main-left-detail">
               <v-img :src="require('@/assets/main/working/icon-call.png')" class="intro-icon"></v-img>
-              <h6>&nbsp;&nbsp;전화 상담 문의 바로 연결</h6>
+              <p class="light_sub">&nbsp;&nbsp;전화 상담 문의 바로 연결</p>
               <v-img :src="require('@/assets/main/working/icon-app.png')" class="intro-icon"></v-img>
-              <h6>&nbsp;&nbsp;달인114 앱 다운로드 페이지 이동</h6>
+              <p class="light_sub">&nbsp;&nbsp;달인114 앱 다운로드 페이지 이동</p>
               <v-img :src="require('@/assets/main/working/icon-alloc.png')" class="intro-icon"></v-img>
-              <h6>&nbsp;&nbsp;배차 신청 페이지 이동</h6>
+              <p class="light_sub">&nbsp;&nbsp;배차 신청 페이지 이동</p>
             </div>
           </div>
           <div class="page-1-main-right">
@@ -293,7 +301,7 @@ export default {
       ],
       introLists: [
         {
-          title: "달인114 소개",
+          title: "서비스 소개",
           code: "intro-1",
         },
         { title: "APP 서비스", code: "intro-2" },
@@ -403,12 +411,6 @@ export default {
 </script>
 
 <style>
-* {
-  font-family: "Nanum Square";
-}
-.h6 {
-  font-size: 0.8rem;
-}
 body {
   margin: 0;
 }
@@ -419,24 +421,30 @@ body {
   width: 100%;
   height: 100%;
 }
-
-.theme--light.v-app-bar.v-toolbar.v-sheet {
-  background-color: #f0f9ff;
+.v-btn:not(.v-btn--round).v-size--default {
+  height: 36px;
+  min-width: 64px;
+  padding: 0px 40px !important;
 }
-
+.theme--light.v-app-bar.v-toolbar.v-sheet {
+  background-color: white !important;
+}
+.v-application p {
+  margin-bottom: 0px !important;
+}
 .page {
   padding: 0 0 0 0;
   display: block;
   text-align: center;
-  font-size: 26px;
-  color: #444444;
+  /*font-size: px;*/
+  color: #333333;
 }
 .page-1 {
-  background-color: #f0f9ff;
+  background-color: white;
 }
 .page-2 {
   /*padding-top: 100px;*/
-  background-color: #f0f9ff;
+  background-color: white;
 }
 .page-3 {
   /*padding-top: 50px;*/
@@ -447,52 +455,65 @@ body {
   background: yellowgreen;
 }
 h3,
-p {
-  font-size: 16px;
+p strong.extraB {
+  font-weight: 800;
+  font-size: xx-large;
+}
+p.light {
+  font-weight: 500;
+  font-size: x-large;
+}
+
+p.light_sub {
+  font-weight: 300;
+  font-size: smaller;
 }
 .button-group {
-  position: absolute;
+  position: fixed;
   text-align: center;
-  left: 47%;
+  left: 42%;
   bottom: 10px;
   z-index: 9;
 }
 
 .scroll-button {
-  width: 15%;
+  width: 20%;
   height: auto;
   text-align: center;
 }
 .page-1-main {
-  padding-top: 5vw;
-  position: absolute;
-  max-width: 70vw;
-  max-height: 70vw;
-  left: 20%;
+  padding-top: 6vw;
+  position: inherit;
+  max-width: 85vw;
+  left: 17%;
   width: auto;
   height: auto;
   display: inline-flex;
+  margin-bottom: 10%;
 }
 .page-1-main-left {
   max-width: 40%;
-  padding-top: 9%;
-  padding-left: 10%;
-  margin-right: 5%;
+  padding-top: 5%;
+  /*padding-left: 10%;*/
+  margin-right: 10% !important;
   text-align: left;
 }
 .page-1-main-left-detail {
-  margin-left: 6%;
+  /*margin-left: 6%;*/
 }
+
 .page-1-main-right {
-  max-width: 40%;
+  max-width: 26%;
+  height: auto;
 }
 
 .intro-ment {
-  margin-bottom: 10%;
+  /*margin-bottom: 5%;*/
 }
 .intro-icon {
-  width: 17vw;
+  width: 15vw;
   height: auto;
+  margin-top: 15px;
 }
 .menu-list {
   float: left;

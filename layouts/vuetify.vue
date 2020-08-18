@@ -1,4 +1,7 @@
 <style>
+* {
+  font-family: "NanumSquareRound", sans-serif;
+}
 .container {
   max-width: 100vw;
   padding: 0px;

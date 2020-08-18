@@ -45,10 +45,16 @@ module.exports = {
         href:
           "https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css"
       },
-      {
+      /*{
         rel: "stylesheet",
         href: "//cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css"
+      },*/
+      {
+        rel: "stylesheet",
+        href:
+          "https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.min.css"
       }
+      //cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.min.css'
     ]
   },
   /*
